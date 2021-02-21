@@ -57,6 +57,22 @@ class orm_audioFilePodcast(orm_audioFileItem,BaseORM):
     host = Column(String(100))
     participants = Column(String(1100))
 
+    def _get_by_id(_self_name,db:sessionLocal,id:int):
+        record = db.query(_self_name).get(id)
+        if record:
+            if 'participants' in record.__dict__.keys():
+                record.__setattr__('participants',\
+                    record.__dict__.get('participants').replace('{','').replace('}','').split(','))
+        return record            
+
+    def _get_all(_self_name,db:sessionLocal):
+        records = db.query(_self_name).all()
+        for record in records:
+            if 'participants' in record.__dict__.keys():
+                record.__setattr__('participants',\
+                    record.__dict__.get('participants','').replace('{','').replace('}','').split(','))
+        return records        
+
 class orm_audioFileBook(orm_audioFileItem,BaseORM):
     __tablename__ = "audiofilebook"
     author = Column(String(100))
