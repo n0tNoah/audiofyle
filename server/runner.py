@@ -41,6 +41,7 @@ def fetch_record(audioFileType:str=False,audioFileID:int=False):
                 return existing_records
     except ValidationError as e:
         return e.errors()
+    return {}
 
 @runner.put("/create")
 def create_record(body_data:BaseData):
