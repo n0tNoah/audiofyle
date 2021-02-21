@@ -1,5 +1,4 @@
 from fastapi import FastAPI,status,Response
-from typing import List, Optional
 from pydantic import ValidationError
 from pydantic.typing import NoneType
 from .helpers import audioFileBook,audioFilePodcast,audioFileSong,BaseData,GenericUpdateModel
@@ -34,8 +33,8 @@ def fetch_record(audioFileType:str=False,audioFileID:int=False):
             if audioFileID:
                 existing_record= _data_class._get_by_id(_data_class,db,audioFileID)
                 if existing_record:
-                    existing_record_validated=_validator_class.from_orm(existing_record)
-                    return existing_record_validated
+                    # existing_record_validated=_validator_class.from_orm(existing_record)
+                    return existing_record
             else:
                 existing_records= _data_class._get_all(_data_class,db)
                 return existing_records

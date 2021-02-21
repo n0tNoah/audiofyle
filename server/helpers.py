@@ -20,10 +20,15 @@ class audioFileItem(BaseModel):
     id: Optional[int]
     duration: int
     name: constr(min_length=0, max_length=100)
-    upload_date :datetime.datetime
+    upload_date :str
 
-    # TODO : FIX validation issue
-    # Accepted format "upload_date":"2019-06-20T01:02:03+05:00"
+    @validator('upload_date')
+    def validate_date_time(upload_date_value):
+        if upload_date_value:
+            _date= datetime.datetime.strptime(upload_date_value,"%Y-%m-%d %H:%M:%S")
+            if _date.date() < datetime.date.today():
+                raise ValueError("Cannot backdate this")
+        return upload_date_value
 
     @validator('duration')
     def postive_duration_only(duration_value):

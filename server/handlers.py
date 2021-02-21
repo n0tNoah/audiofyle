@@ -7,7 +7,8 @@ from sqlalchemy.orm import sessionmaker as sessionLocal
 from .database import BaseORM
 class orm_audioFileItem():
     id = Column(Integer, primary_key=True, autoincrement=True,index=True)
-    upload_date = Column(TIMESTAMP)
+    # upload_date = Column(TIMESTAMP)
+    upload_date = Column(String(200))
     duration = Column(Integer,)
     name = Column(String(100))
 
